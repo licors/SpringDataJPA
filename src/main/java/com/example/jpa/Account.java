@@ -1,8 +1,7 @@
 package com.example.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Account {
@@ -10,9 +9,29 @@ public class Account {
     @Id @GeneratedValue
     private Long id;
 
+    // 모든 항목에 @Column 이 생략되어 있지만 이렇게 명시해도 된다.
+    @Column(nullable = false, unique = true)
     private String username;
 
     private String password;
+
+    // Date, Calendar 만 지원
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created = new Date();
+
+    private String yes;
+
+    @Transient
+    private String no;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "home_street"))
+    })
+    private Address home_address;
+
+//    @Embedded
+//    private Address office_address;
 
     public Long getId() {
         return id;
