@@ -2,6 +2,8 @@ package com.example.jpa;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -33,6 +35,11 @@ public class Account {
 //    @Embedded
 //    private Address office_address;
 
+    // fk 있는 쪽이 owner ?
+    // 양방향 관계 세팅하려면 mappedBy 설정해야 한다.
+    @OneToMany(mappedBy = "owner")
+    private Set<Study> studies = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -55,5 +62,13 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Study> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(Set<Study> studies) {
+        this.studies = studies;
     }
 }

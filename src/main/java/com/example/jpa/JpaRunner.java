@@ -22,7 +22,16 @@ public class JpaRunner implements ApplicationRunner {
         account.setUsername("ahm");
         account.setPassword("pass");
 
+        Study study = new Study();
+        study.setName("Spring Data JPA");
+        study.setOwner(account);
+
+        // 주인에서 관계 설정 , 이렇게 안하면 저장 안됨
+        study.setOwner(account);
+        account.getStudies().add(study);
+
         Session session = entityManager.unwrap(Session.class);
         session.save(account);
+        session.save(study);
     }
 }
