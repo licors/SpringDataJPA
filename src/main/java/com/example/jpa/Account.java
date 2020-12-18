@@ -71,4 +71,16 @@ public class Account {
     public void setStudies(Set<Study> studies) {
         this.studies = studies;
     }
+
+    // 주인은 스터디 이지만 many 쪽에서 관리할 때 이런식으로 쓰인다.
+    // fk 가지고 있는 쪽이 주인
+    public void addStudy(Study study) {
+        study.setOwner(this);
+        this.getStudies().add(study);
+    }
+
+    public void removeStudy(Study study) {
+        study.setOwner(null);
+        this.getStudies().remove(study);
+    }
 }

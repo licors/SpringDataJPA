@@ -26,9 +26,7 @@ public class JpaRunner implements ApplicationRunner {
         study.setName("Spring Data JPA");
         study.setOwner(account);
 
-        // 주인에서 관계 설정 , 이렇게 안하면 저장 안됨
-        study.setOwner(account);
-        account.getStudies().add(study);
+        account.addStudy(study);
 
         Session session = entityManager.unwrap(Session.class);
         session.save(account);
