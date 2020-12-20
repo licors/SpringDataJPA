@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+// Native Query 사용시 미리 등록해놔야...
+@NamedQueries({
+        @NamedQuery(name = "all_post", query = "SELECT p from Post as p")
+})
+
 @Entity
 public class Post {
 
@@ -44,5 +49,12 @@ public class Post {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "title='" + title + '\'' +
+                '}';
     }
 }
