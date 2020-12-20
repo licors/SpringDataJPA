@@ -1,6 +1,8 @@
 package com.example.jpa;
 
+import com.example.jpa.repository.PostRepository;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -20,6 +23,9 @@ public class JpaRunner implements ApplicationRunner {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    PostRepository postRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -76,5 +82,10 @@ public class JpaRunner implements ApplicationRunner {
         // Native Query 사용법
         List post3 = entityManager.createNativeQuery("select * from Post", Post.class).getResultList();
         post3.forEach(System.out::println);
+
+
+        // JPA 사용
+        Optional<Post> byId = postRepository.findById(2l);
+        System.out.println(byId.toString());
     }
 }
