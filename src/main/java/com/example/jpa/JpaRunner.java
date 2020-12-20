@@ -30,6 +30,27 @@ public class JpaRunner implements ApplicationRunner {
 
         Session session = entityManager.unwrap(Session.class);
         session.save(account);
-        session.save(study);
+
+
+        Post post = new Post();
+        post.setTitle("Spring Data Jpa 언제 보나...");
+
+        Comment comment = new Comment();
+        comment.setComment("빨리 빨리");
+        post.addComment(comment);
+
+        Comment comment1 = new Comment();
+        comment1.setComment("커밍 순");
+        post.addComment(comment1);
+
+        session.save(post);
+//        post = session.get(Post.class, 2l);
+//        System.out.println(post.getTitle());
+//        System.out.println("==================");
+//
+//        post.getComments().forEach(c -> {
+//            System.out.println("-------");
+//            System.out.println(c.getComment());
+//        });
     }
 }
