@@ -23,6 +23,7 @@ public class CommentRepositoryTest {
     public void crud() {
         Comment comment = new Comment();
         comment.setComment("hello Comment 한글은?");
+        comment.setLikeCount(1);
         commentRepository.save(comment);
 
         List<Comment> comments = commentRepository.findAll();
@@ -32,5 +33,8 @@ public class CommentRepositoryTest {
         assertThat(byId).isEmpty();
         // Optional 이용한 예외처리 구현 코드
 //        Comment byIdComment = byId.orElseThrow(IllegalAccessError::new);
+
+        List<Comment> helloComments = commentRepository.findByCommentContainsIgnoreCaseAndLikeCountGreaterThan("hello", 10);
+        assertThat(helloComments.size()).isEqualTo(0);
     }
 }

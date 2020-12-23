@@ -17,6 +17,17 @@ public class Comment {
     @ManyToOne
     private Post post;
 
+    // 클래스로 선언하면 테이블에서 널 값으로 기본세팅됨, 그래서 널이 안들어가도록 0 기본값 넣어줌
+    private Integer likeCount = 0;
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public Long getId() {
         return id;
     }
