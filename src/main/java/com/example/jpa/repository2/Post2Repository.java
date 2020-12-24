@@ -1,6 +1,6 @@
 package com.example.jpa.repository2;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.jpa.AllEntityRepository;
 
-public interface Post2Repository extends JpaRepository<Post2, Long>, Post2CustomRepository {
+public interface Post2Repository extends AllEntityRepository<Post2, Long> {
 }
