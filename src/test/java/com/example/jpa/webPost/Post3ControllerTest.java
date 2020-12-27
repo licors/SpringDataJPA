@@ -43,12 +43,13 @@ public class Post3ControllerTest {
 
     @Test
     public void getPosts() throws Exception {
-        Post3 post3 = new Post3();
-        post3.setTitle("jpa");
-        post3Repository.save(post3);
+//        Post3 post3 = new Post3();
+//        post3.setTitle("jpa");
+//        post3Repository.save(post3);
+        createdPosts();
 
         mockMvc.perform(get("/posts/")
-                    .param("page", "0")
+                    .param("page", "3")
                     .param("size", "10")
                     .param("sort", "created,desc")
                     .param("sort", "title"))
@@ -57,5 +58,15 @@ public class Post3ControllerTest {
                 .andExpect(result->{
                     jsonPath("$.content[0].title", is("jpa"));
                 });
+    }
+
+    private void createdPosts() {
+        int postsCount = 100;
+        while (postsCount > 0) {
+            Post3 post3 = new Post3();
+            post3.setTitle("jpa" + postsCount);
+            post3Repository.save(post3);
+            postsCount--;
+        }
     }
 }

@@ -4,6 +4,9 @@ import com.example.jpa.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +35,7 @@ public class Post3Controller {
     }
 
     @GetMapping("/posts")
-    public Page<Post3> getPosts(Pageable pageable) {
-        return post3Repository.findAll(pageable);
+    public PagedModel<EntityModel<Post3>> getPosts(Pageable pageable, PagedResourcesAssembler<Post3> assembler) {
+        return assembler.toModel(post3Repository.findAll(pageable));
     }
 }
