@@ -2,6 +2,8 @@ package com.example.jpa.webPost;
 
 import com.example.jpa.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +29,10 @@ public class Post3Controller {
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable("id") Post3 post3) {
         return post3.getTitle();
+    }
+
+    @GetMapping("/posts")
+    public Page<Post3> getPosts(Pageable pageable) {
+        return post3Repository.findAll(pageable);
     }
 }
