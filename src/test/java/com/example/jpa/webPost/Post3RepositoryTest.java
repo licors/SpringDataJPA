@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
@@ -65,7 +67,8 @@ public class Post3RepositoryTest {
         post3.setTitle("spring Data Jpa");
         post3Repository.save(post3);
 
-        List<Post3> all = post3Repository.findByTitle("spring Data Jpa");
+        // 정렬에는 properties or alias 만 사용 가능
+        List<Post3> all = post3Repository.findByTitle("spring Data Jpa", Sort.by("title"));
         assertThat(all.size()).isEqualTo(1);
     }
 
@@ -77,8 +80,8 @@ public class Post3RepositoryTest {
 
         Date date = new Date();
         date.setTime(System.currentTimeMillis() - 100000);
-
-        List<Post3> all = post3Repository.findByCreatedAfter(date);
+        // 정렬에서 함수 사용하고 싶으면 JpaSort.unsafe()... 이 메소드는 @Query 선언된 곳만 가능한 것인가? 위에 다른 함수들 다 fail
+        List<Post3> all = post3Repository.findByCreatedAfter(date, JpaSort.unsafe("LENGTH(title)"));
         assertThat(all.size()).isEqualTo(1);
     }
 }
