@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,6 +46,39 @@ public class Post3RepositoryTest {
         updatedPost3.setTitle("change value");  // 이런식으로 리턴객체 사용해야 변화 감지함
 
         List<Post3> all = post3Repository.findAll();  // 이 함수 없이 위에 save 만 하면 jpa 최적화로 인해 insert, update 안날라감
+        assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void findByTitleStartsWith() {
+        Post3 post3 = new Post3();
+        post3.setTitle("spring Data Jpa");
+        post3Repository.save(post3);
+
+        List<Post3> all = post3Repository.findByTitleStartsWith("spring");
+        assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void findByTitle() {
+        Post3 post3 = new Post3();
+        post3.setTitle("spring Data Jpa");
+        post3Repository.save(post3);
+
+        List<Post3> all = post3Repository.findByTitle("spring Data Jpa");
+        assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void findByCreatedAfter() {
+        Post3 post3 = new Post3();
+        post3.setTitle("spring Data Jpa");
+        post3Repository.save(post3);
+
+        Date date = new Date();
+        date.setTime(System.currentTimeMillis() - 100000);
+
+        List<Post3> all = post3Repository.findByCreatedAfter(date);
         assertThat(all.size()).isEqualTo(1);
     }
 }

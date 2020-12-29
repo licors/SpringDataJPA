@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@NamedQuery(name = "Post3.findByTitle", query = "select p FROM Post3 as p where p.title = ?1")
 public class Post3 {
 
     @Id @GeneratedValue
@@ -12,7 +13,7 @@ public class Post3 {
     private String title;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date created = new Date();
 
     public Long getId() {
         return id;
